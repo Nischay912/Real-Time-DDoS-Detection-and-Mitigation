@@ -1,0 +1,17 @@
+node server.js in one terminal
+python attacker.py in 2nd terminak
+Then see the 1st terminal getting flooded with requests 
+
+In 3rd terminal -> python sniffer.py
+Nothing happening , so :
+Go to npcap.com -> latest installer download -> install
+
+python -c "from scapy.all import show_interfaces; show_interfaces()" -> to get the controller name and its id from there
+
+libpcap  1      Software Loopback Interface 1                                       00:00:00:00:00:00      127.0.0.1        ::1
+
+Added to sniffer.py
+
+pip install scikit-learn pandas joblib
+
+python train_model.py
