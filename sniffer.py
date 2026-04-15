@@ -8,7 +8,6 @@ import threading
 import requests
 
 app = Flask(__name__)
-# CRITICAL: This allows React to talk to Python without "Reset Failed"
 CORS(app, resources={r"/*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -36,7 +35,6 @@ def process_packet(packet):
                     status = "Attack"
                     print(f"[{time.strftime('%H:%M:%S')}] 🚨 ATTACK: {src_ip} ({pps} pps)")
                     blocked_ips.add(src_ip)
-                    # Tell Node.js to block
                     try:
                         requests.post('http://127.0.0.1:3000/api/block', json={'ip': src_ip}, timeout=1)
                         requests.post('http://127.0.0.1:3000/api/block', json={'ip': f'::ffff:{src_ip}'}, timeout=1)
@@ -52,7 +50,6 @@ def process_packet(packet):
                 packet_count = 0
                 start_time = current_time
 
-# This route MUST exist for the "Reset Firewall" button to work
 @app.route('/api/python_reset', methods=['POST', 'OPTIONS'])
 def python_reset():
     if request.method == 'OPTIONS': return jsonify({'success': True})
